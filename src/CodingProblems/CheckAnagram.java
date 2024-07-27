@@ -1,47 +1,58 @@
 package CodingProblems;
-
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 
 public class CheckAnagram {
 
-	// Output: [["bat"],["nat","tan"],["ate","eat","tea"]]
-
 	public static void main(String[] args) {
-		String arr[] = { "eat", "tea", "tan", "ate", "nat", "bat" };
 
-		List<String> myList = Arrays.asList(arr);
-		List<String> myList2 = new ArrayList<>();
+		String one = "Mother In Law";
+		String two = "Hitler Woman";
+		System.out.println(anagramEquals(one, two));
+		System.out.println(anagramMap(one, two));
 
-		for (String m : myList) {
-			System.out.println(m);
-			char[] a = m.toCharArray();
-			Arrays.sort(a);
+	}
 
-			myList2.add(String.valueOf(a));
+	public static boolean anagramEquals(String a, String b) {
+		char[] oneArray = a.toLowerCase().replaceAll("\\s","").toCharArray();
+		char[] twoArray = b.toLowerCase().replaceAll("\\s","").toCharArray();
+		Arrays.sort(oneArray);
+		Arrays.sort(twoArray);
+		return Arrays.equals(oneArray, twoArray);
+	}
 
-		}
+	public static boolean anagramMap(String c, String d) {
+		String a = c.toLowerCase().replaceAll("\\s","");
+		String b = d.toLowerCase().replaceAll("\\s","");
 
-		System.out.println(myList2);
-
-		HashMap<String, Integer> hm = new HashMap<String, Integer>();
-		int i = 0;
-		for (String string : myList2) {
-
-			if (hm.containsKey(string)) {
-				hm.put(string, hm.get(string) + 1);
-
+		HashMap<Character, Integer> myMap = new HashMap<>();
+		for (int i = 0; i < a.length(); i++) {
+			if (myMap.containsKey(a.charAt(i))) {
+				myMap.put(a.charAt(i), myMap.get(a.charAt(i)) + 1);
 			} else {
-				hm.put(string, 1);
-
+				myMap.put(a.charAt(i), 1);
 			}
 		}
-		System.out.println(hm);
+		HashMap<Character, Integer> myMap2 = new HashMap<>();
+		for (int i = 0; i < b.length(); i++) {
+			if (myMap2.containsKey(b.charAt(i))) {
+				myMap2.put(b.charAt(i), myMap2.get(b.charAt(i)) + 1);
+			} else {
+				myMap2.put(b.charAt(i), 1);
+			}
+		}
+
+		for (Map.Entry<Character, Integer> entry : myMap.entrySet()) {
+			Character key = entry.getKey();
+			Integer val = entry.getValue();
+			System.out.println("Key is " + key + " " + "Value is " + val);
+
+		}
+		myMap.entrySet();
+
+		return myMap.equals(myMap2);
+
 	}
 
 }
